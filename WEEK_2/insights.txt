@@ -1,0 +1,7 @@
+1. Electronics products generate high revenue.
+2. Delivered orders contribute the highest sales.
+3. Premium products have higher prices but lower stock quantities.
+4. Maharashtra contains multiple premium customers.
+5. Discounted products improve purchasing behavior.
+6. JOIN queries help analyze customer buying patterns.
+7. Indexes improve query performance on large datasets.

@@ -1,0 +1,34 @@
+Q26 — ACID Properties
+A — Atomicity
+Meaning--------------
+A transaction is completed fully or rolled back completely.
+
+Example--------------
+In a bank transfer:
+
+-Money deducted from one account
+-Must also be added to another account
+-Partial transactions are not allowed.
+
+
+C — Consistency
+Meaning------------
+The database must always remain valid according to defined rules.
+
+Example-----------------
+Negative balances should not be allowed
+
+
+I — Isolation
+Meaning-------------
+Multiple transactions should not interfere with each other.
+
+Example--------------
+Two users purchasing the same product simultaneously.
+
+D — Durability
+Meaning----------------
+Once committed, data remains permanently saved.
+
+Example--------------
+Even after a system crash, committed transactions remain

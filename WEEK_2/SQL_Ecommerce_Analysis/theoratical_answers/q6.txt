@@ -1,0 +1,20 @@
+Q6 — Negative Price Constraint
+Query---
+INSERT INTO products
+VALUES
+(209,'Fake Product',
+'Electronics',
+'TestBrand',
+-50,
+10);
+
+
+Result--
+The insertion will fail.
+
+Constraint Responsible
+CHECK (unit_price > 0)
+
+Explanation--
+The CHECK constraint ensures that:
+-Product prices cannot be negative.

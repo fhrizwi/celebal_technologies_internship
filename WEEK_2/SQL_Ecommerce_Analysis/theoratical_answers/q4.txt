@@ -1,0 +1,21 @@
+| Table Name  | Primary Key |
+| ----------- | ----------- |
+| customers   | customer_id |
+| products    | product_id  |
+| orders      | order_id    |
+| order_items | item_id     |
+
+
+Explanation
+
+A Primary Key:
+Uniquely identifies each row in a table.
+Does not allow duplicate values.
+Cannot contain NULL values.
+
+
+Why must it be UNIQUE?
+If duplicate IDs exist, records cannot be uniquely identified.
+
+Why must it be NOT NULL?
+Every row must have a valid identifier.

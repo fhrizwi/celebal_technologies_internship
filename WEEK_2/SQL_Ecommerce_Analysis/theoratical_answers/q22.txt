@@ -1,0 +1,40 @@
+Q22 — LEFT JOIN vs RIGHT JOIN
+LEFT JOIN
+
+A LEFT JOIN:
+
+-Returns all records from the left table.
+-Returns matching records from the right table.
+-Displays NULL for non-matching rows.
+
+
+Example--
+SELECT *
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id=o.customer_id;
+
+Here:
+-All customers will appear.
+-Customers without orders will show NULL values.
+
+RIGHT JOIN-------------------------------
+
+A RIGHT JOIN:
+-Returns all records from the right table.
+
+Example--
+SELECT *
+FROM customers c
+RIGHT JOIN orders o
+ON c.customer_id=o.customer_id;
+
+
+FULL OUTER JOIN------------------------
+
+A FULL OUTER JOIN:
+-Returns all records from both tables.
+-Displays NULL where matches do not exist.
+
+Use Case--------------
+It is useful for identifying missing relationships between tables.

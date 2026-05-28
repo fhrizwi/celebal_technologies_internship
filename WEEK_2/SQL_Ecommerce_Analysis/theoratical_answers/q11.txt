@@ -1,0 +1,23 @@
+Q11 — Index Explanation
+
+Index Name--
+idx_orders_date
+
+
+Purpose--
+This index:
+
+-Improves searching speed on the order_date column.
+-Avoids full table scans.
+
+
+Benefit
+If the table contains millions of records:
+-Queries execute much faster.
+
+Example Query--
+SELECT *
+FROM orders
+WHERE order_date='2024-08-15';
+
+This query can efficiently use the index.

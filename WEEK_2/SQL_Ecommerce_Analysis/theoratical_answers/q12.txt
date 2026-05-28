@@ -1,0 +1,25 @@
+Q12 — SARGable Query Explanation
+Query--
+SELECT *
+FROM customers
+WHERE YEAR(join_date)=2024;
+
+
+Problem--
+The YEAR() function is applied to the column.
+Because of this:
+-The index cannot be efficiently used.
+-A full table scan may occur.
+
+Better SARGable Query
+
+SELECT *
+FROM customers
+WHERE join_date BETWEEN
+'2024-01-01'
+AND '2024-12-31';
+
+
+Why is this Better?
+-Direct comparison is performed on the column.
+-The database can use the index efficiently.

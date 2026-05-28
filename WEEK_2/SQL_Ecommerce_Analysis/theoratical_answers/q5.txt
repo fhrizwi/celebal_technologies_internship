@@ -1,0 +1,27 @@
+Q5 — Constraints on email Column
+Constraints Applied
+SQL QUERY-----
+email VARCHAR(100) UNIQUE NOT NULL
+
+
+Meaning-----------
+| Constraint | Purpose                            |
+| ---------- | ---------------------------------- |
+| UNIQUE     | Prevents duplicate email addresses |
+| NOT NULL   | Prevents empty email values        |
+
+
+Duplicate Email Insert Example--
+SQL QUERY--
+INSERT INTO customers
+VALUES
+(109,'Test','User',
+'aarav.s@email.com',
+'Patna','Bihar',
+'2024-09-01',FALSE);
+
+Result-----------
+
+The database will generate an error because:
+The email already exists.
+The UNIQUE constraint is violated.
