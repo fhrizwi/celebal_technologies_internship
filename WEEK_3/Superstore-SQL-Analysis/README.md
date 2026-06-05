@@ -12,6 +12,10 @@ Analyze Superstore sales data using:
 
 Sample Superstore Dataset
 
+## Dataset Link
+
+https://www.kaggle.com/datasets/vivek468/superstore-dataset-final
+
 ## Technologies
 
 - MySQL Workbench
