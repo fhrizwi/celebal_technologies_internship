@@ -1,0 +1,6 @@
+user_id,transaction_date,region,product_category,sale_amount,city,age,subscription,status,email,username,price,store_id
+1,2025-01-01,West,Electronics,1000,Delhi,25,Premium,,abc@gmail.com,abc,100,101
+1,2025-01-01,West,Electronics,1000,Delhi,25,Premium,,abc@gmail.com,abc,100,101
+2,2025-01-02,East,Clothing,500,Mumbai,30,Basic,Active,,xyz,200,102
+3,2025-01-03,West,Electronics,1500,Delhi,20,Premium,,test@gmail.com,test,300,101
+4,2025-01-04,South,Grocery,,Chennai,18,Premium,,demo@gmail.com,demo,,103
