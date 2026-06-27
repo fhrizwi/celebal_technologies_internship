@@ -5,8 +5,12 @@ from pyspark.sql.functions import col
 # Create Spark Session
 # -----------------------------------
 
+
+# SparkSession builder ke andar hi log level config daal di hai 
+# taaki session bante waqt bhi koi warning na aaye.
 spark = SparkSession.builder \
     .appName("Week6 Spark Assignment") \
+    .config("spark.driver.extraJavaOptions", "-Dlog4j.configuration=log4j2.properties") \
     .getOrCreate()
 
 print("Spark Session Created Successfully")

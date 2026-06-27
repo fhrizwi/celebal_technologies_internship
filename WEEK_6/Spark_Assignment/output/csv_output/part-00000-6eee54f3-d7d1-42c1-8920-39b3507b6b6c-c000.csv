@@ -1,0 +1,5 @@
+product_id,category,price,new_name,base_price,user_id,status,amount,region,priority,final_price
+101,Electronics,1500.0,Phone,1200,1,Completed,1500,North,High,1416.0
+102,Furniture,500.0,Chair,450,2,Pending,500,South,Low,531.0
+104,Toys,300.0,Car,250,4,Completed,300,East,Medium,295.0
+105,Electronics,1800.0,TV,1600,5,Pending,1800,West,High,1888.0
