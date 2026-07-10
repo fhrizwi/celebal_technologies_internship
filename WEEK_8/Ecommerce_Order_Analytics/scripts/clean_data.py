@@ -31,6 +31,43 @@ issues = []
 def clean_orders(orders_df):
 
     print("\nCleaning Orders...")
+    
+    
+# --------------------------------------------------
+# Clean Products
+# --------------------------------------------------
+
+def clean_products(products_df):
+
+    print("\nCleaning Products...")
+
+    fixed_names = 0
+
+    cleaned_names = []
+
+    for name in products_df["product_name"]:
+
+        original = str(name)
+
+        cleaned = original.strip().title()
+
+        if original != cleaned:
+            fixed_names += 1
+
+        cleaned_names.append(cleaned)
+
+    products_df["product_name"] = cleaned_names
+
+    issues.append(f"Product Names Fixed : {fixed_names}")
+
+    products_df.to_csv(
+        CLEAN_DIR / "products.csv",
+        index=False
+    )
+
+    print("products.csv cleaned")
+
+    return products_df
 
     # ----------------------------
     # Handle NULL customer_id
@@ -95,3 +132,6 @@ def clean_orders(orders_df):
 customers, products, orders, order_items = load_data()
 
 orders = clean_orders(orders)
+
+products = clean_products(products)
+
