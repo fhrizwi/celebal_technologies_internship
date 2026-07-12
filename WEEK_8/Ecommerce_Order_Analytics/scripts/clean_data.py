@@ -1,6 +1,7 @@
 from pathlib import Path
 import pandas as pd
 import re
+from datetime import datetime
 
 # -----------------------------
 # Paths
@@ -273,6 +274,89 @@ def check_referential_integrity(orders, products, order_items):
     return order_items, invalid_records
 
 
+# -----------------------------
+# Clean Order Items
+# -----------------------------
+
+def clean_order_items(order_items):
+
+    print("\n" + "=" * 60)
+    print("Cleaning Order Items")
+    print("=" * 60)
+
+    # Remove duplicate rows
+    before = len(order_items)
+
+    order_items = order_items.drop_duplicates()
+
+    duplicates = before - len(order_items)
+
+    issues.append(
+        f"Duplicate Order Items Removed : {duplicates}"
+    )
+
+    # Quantity should not be zero
+    zero_quantity = (order_items["quantity"] == 0).sum()
+
+    issues.append(
+        f"Zero Quantity Records : {zero_quantity}"
+    )
+
+    # Discount should be between 0 and 100
+    invalid_discount = (
+        (order_items["discount_percent"] < 0) |
+        (order_items["discount_percent"] > 100)
+    ).sum()
+
+    issues.append(
+        f"Invalid Discount Records : {invalid_discount}"
+    )
+
+    order_items.to_csv(
+        CLEAN_DIR / "order_items.csv",
+        index=False
+    )
+
+    print("✔ Order Items Cleaned Successfully")
+
+    return order_items
+
+
+# -----------------------------
+# Save Issue Report
+# -----------------------------
+
+def save_issue_report():
+
+    print("\n" + "=" * 60)
+    print("Saving Issue Report")
+    print("=" * 60)
+
+    report_path = REPORT_DIR / "issues_report.txt"
+
+    try:
+        with open(report_path, "w", encoding="utf-8") as file:
+
+            file.write("=" * 50 + "\n")
+            file.write("DATA CLEANING REPORT\n")
+            file.write("=" * 50 + "\n\n")
+            file.write(f"Generated: {datetime.utcnow().isoformat()}Z\n\n")
+
+            if not issues:
+                file.write("No issues found.\n")
+            else:
+                for issue in issues:
+                    file.write(issue + "\n")
+
+            file.write("\nCleaning completed successfully.\n")
+
+        print(f"\n✔ issues_report.txt generated: {report_path}")
+        return report_path
+
+    except Exception as e:
+        print(f"Failed to write issue report: {e}")
+        return None
+
 customers, products, orders, order_items = load_data()
 
 orders = clean_orders(orders)
@@ -287,11 +371,6 @@ order_items, invalid_records = check_referential_integrity(
     order_items
 )
 
-print("\nInvalid Customer IDs")
+order_items = clean_order_items(order_items)
 
-for customer in invalid_customers:
-    print(customer)
-
-print("\nInvalid Referential Records")
-
-print(len(invalid_records))
+save_issue_report()
