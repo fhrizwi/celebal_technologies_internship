@@ -6,14 +6,14 @@ Report Type: MONTHLY
 Current Period: 2026-06-01 to 2026-06-30
 Previous Period: 2026-05-02 to 2026-05-31
 
-Total Orders: 13
-Total Revenue: 656461.41
-Unique Customers: 12
+Total Orders: 14
+Total Revenue: 674273.61
+Unique Customers: 13
 
 Comparison with Previous Period
 ----------------------------------------
 Orders Change: 0.00%
-Revenue Change: -51.45%
+Revenue Change: -57.88%
 Customers Change: 0.00%
 
 Top 3 Products

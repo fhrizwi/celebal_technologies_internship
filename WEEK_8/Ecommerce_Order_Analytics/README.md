@@ -511,6 +511,64 @@ The project helps identify:
 * Use larger real-world e-commerce datasets
 * Deploy the analytics system on a cloud platform
 
+# Screenshots
+
+## Generate Data
+
+![Generate Data](screenshots/01_generate_data.png)
+
+---
+
+## Data Cleaning
+
+![Cleaning](screenshots/02_clean_data.png)
+
+---
+
+## Database
+
+![Database](screenshots/03_database_loaded.png)
+
+---
+
+## Basic Queries
+
+![Basic](screenshots/04_basic_queries.png)
+
+---
+
+## Intermediate Queries
+
+![Intermediate](screenshots/05_intermediate_queries.png)
+
+---
+
+## Advanced Queries
+
+![Advanced](screenshots/06_advanced_queries1.png)
+
+![Advanced](screenshots/07_advanced_queries2.png)
+
+![Advanced](screenshots/08_advanced_queries3.png)
+
+---
+
+## Report Generator
+
+![Report](screenshots/09_report.png)
+
+---
+
+## Edge Case Testing
+
+![Testing](screenshots/10_testing.png)
+
+---
+
+## Project Structure
+
+![Structure](screenshots/11_project_structure.png)
+
 ## Author
 
 **Faizul Haque Rizwi**
