@@ -1,0 +1,21 @@
+======================================================================
+E-COMMERCE ORDER ANALYTICS REPORT
+======================================================================
+
+Report Type: WEEKLY
+Current Period: 2026-06-01 to 2026-06-07
+Previous Period: 2026-05-25 to 2026-05-31
+
+Total Orders: 0
+Total Revenue: 0.00
+Unique Customers: 0
+
+Comparison with Previous Period
+----------------------------------------
+Orders Change: -100.00%
+Revenue Change: -100.00%
+Customers Change: -100.00%
+
+Top 3 Products
+----------------------------------------
+No products found.
