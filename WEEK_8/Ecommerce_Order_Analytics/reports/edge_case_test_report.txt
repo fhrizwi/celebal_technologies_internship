@@ -1,0 +1,54 @@
+======================================================================
+E-COMMERCE ORDER ANALYTICS
+EDGE CASE TEST REPORT
+======================================================================
+
+Generated: 2026-07-13 02:00:33
+
+Test 1: Order item with non-existent order_id
+Status: PASS
+Expected: SQLite should reject the invalid foreign key.
+Actual: IntegrityError raised: FOREIGN KEY constraint failed
+----------------------------------------------------------------------
+Test 2: Discount greater than 100
+Status: PASS
+Expected: SQLite should reject discount_percent > 100.
+Actual: IntegrityError raised: CHECK constraint failed: discount_percent >= 0
+                    AND discount_percent <= 100
+----------------------------------------------------------------------
+Test 3: Quantity equal to zero
+Status: PASS
+Expected: Application validation should identify quantity = 0.
+Actual: Zero quantity detected and should be flagged before database loading.
+----------------------------------------------------------------------
+Test 4: Order date in the future
+Status: PASS
+Expected: Future order dates should be detected and flagged.
+Actual: Future date detected: 2026-08-12
+----------------------------------------------------------------------
+Test 5: Existing database referential integrity
+Status: PASS
+Expected: No invalid references should exist.
+Actual: Invalid reference count: 0
+----------------------------------------------------------------------
+Test 6: Existing discount range validation
+Status: PASS
+Expected: All discounts should be between 0 and 100.
+Actual: Invalid discount count: 0
+----------------------------------------------------------------------
+Test 7: Existing zero quantities
+Status: PASS
+Expected: No zero-quantity rows should exist.
+Actual: Zero-quantity row count: 0
+----------------------------------------------------------------------
+Test 8: Existing future order dates
+Status: PASS
+Expected: No order dates should be in the future.
+Actual: Future order count: 0
+----------------------------------------------------------------------
+
+TEST SUMMARY
+----------------------------------------------------------------------
+Total Tests : 8
+Passed      : 8
+Failed      : 0
