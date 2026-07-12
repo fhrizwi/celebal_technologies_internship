@@ -192,9 +192,63 @@ def clean_products(products):
     return orders
 
 
+# -----------------------------
+# Validate Emails
+# -----------------------------
+
+def validate_emails(customers):
+
+    print("\n" + "=" * 60)
+    print("Validating Customer Emails")
+    print("=" * 60)
+
+    email_pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+
+    invalid_customers = []
+
+    valid_email = []
+
+    for _, row in customers.iterrows():
+
+        email = str(row["email"]).strip()
+
+        if re.match(email_pattern, email):
+
+            valid_email.append(True)
+
+        else:
+
+            valid_email.append(False)
+
+            invalid_customers.append(row["customer_id"])
+
+    customers["email_valid"] = valid_email
+
+    issues.append(
+        f"Invalid Emails : {len(invalid_customers)}"
+    )
+
+    customers.to_csv(
+        CLEAN_DIR / "customers.csv",
+        index=False
+    )
+
+    print(f"✔ Invalid Emails Found : {len(invalid_customers)}")
+
+    return customers, invalid_customers
+
 
 customers, products, orders, order_items = load_data()
 
 orders = clean_orders(orders)
 
 products = clean_products(products)
+
+customers, invalid_customers = validate_emails(customers)
+
+
+print("\nInvalid Customer IDs")
+
+for customer in invalid_customers:
+
+    print(customer)
