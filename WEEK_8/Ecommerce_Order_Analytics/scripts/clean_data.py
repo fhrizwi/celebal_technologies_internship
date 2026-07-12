@@ -57,7 +57,7 @@ def clean_orders(orders):
 
     issues.append(f"Missing Customer IDs : {missing_customer}")
 
-    orders["customer_id"] = orders["customer_id"].fillna("UNKNOWN")
+    orders["customer_id"] = orders["customer_id"].fillna("C_UNKNOWN")
 
     # ---------------------------------
     # 2. Fix Date Formats
@@ -223,6 +223,7 @@ def validate_emails(customers):
 
     customers["email_valid"] = valid_email
 
+
     issues.append(
         f"Invalid Emails : {len(invalid_customers)}"
     )
@@ -235,6 +236,11 @@ def validate_emails(customers):
     print(f"✔ Invalid Emails Found : {len(invalid_customers)}")
 
     return customers, invalid_customers
+
+
+
+
+
 
 
 # -----------------------------
@@ -364,6 +370,31 @@ orders = clean_orders(orders)
 products = clean_products(products)
 
 customers, invalid_customers = validate_emails(customers)
+
+if "C_UNKNOWN" not in customers["customer_id"].values:
+
+    unknown_customer = pd.DataFrame(
+        [
+            {
+                "customer_id": "C_UNKNOWN",
+                "customer_name": "Unknown Customer",
+                "email": "unknown@example.com",
+                "registration_date": "1900-01-01",
+                "customer_type": "REGULAR",
+                "email_valid": True
+            }
+        ]
+    )
+
+    customers = pd.concat(
+        [customers, unknown_customer],
+        ignore_index=True
+    )
+
+    customers.to_csv(
+        CLEAN_DIR / "customers.csv",
+        index=False
+    )
 
 order_items, invalid_records = check_referential_integrity(
     orders,
