@@ -48,59 +48,6 @@ def clean_orders(orders):
     print("\n" + "=" * 60)
     print("Cleaning Orders")
     print("=" * 60)
-    
-    
-# -----------------------------
-# Clean Products
-# -----------------------------
-
-def clean_products(products):
-
-    print("\n" + "=" * 60)
-    print("Cleaning Products")
-    print("=" * 60)
-
-    cleaned_names = []
-    fixed_names = 0
-
-    for name in products["product_name"]:
-
-        original = str(name)
-
-        # Remove extra spaces
-        cleaned = " ".join(original.split())
-
-        # Convert to Title Case
-        cleaned = cleaned.title()
-
-        if original != cleaned:
-            fixed_names += 1
-
-        cleaned_names.append(cleaned)
-
-    products["product_name"] = cleaned_names
-
-    # Remove duplicate products
-    before = len(products)
-
-    products = products.drop_duplicates()
-
-    after = len(products)
-
-    duplicate_products = before - after
-
-    issues.append(f"Product Names Fixed : {fixed_names}")
-    issues.append(f"Duplicate Products Removed : {duplicate_products}")
-
-    products.to_csv(
-        CLEAN_DIR / "products.csv",
-        index=False
-    )
-
-    print("✔ Products Cleaned Successfully")
-
-    return products
-
     # ---------------------------------
     # 1. Handle Missing Customer IDs
     # ---------------------------------
@@ -190,6 +137,57 @@ def clean_products(products):
     print("✔ Orders Cleaned Successfully")
 
     return orders
+    
+# -----------------------------
+# Clean Products
+# -----------------------------
+
+def clean_products(products):
+
+    print("\n" + "=" * 60)
+    print("Cleaning Products")
+    print("=" * 60)
+
+    cleaned_names = []
+    fixed_names = 0
+
+    for name in products["product_name"]:
+
+        original = str(name)
+
+        # Remove extra spaces
+        cleaned = " ".join(original.split())
+
+        # Convert to Title Case
+        cleaned = cleaned.title()
+
+        if original != cleaned:
+            fixed_names += 1
+
+        cleaned_names.append(cleaned)
+
+    products["product_name"] = cleaned_names
+
+    # Remove duplicate products
+    before = len(products)
+
+    products = products.drop_duplicates()
+
+    after = len(products)
+
+    duplicate_products = before - after
+
+    issues.append(f"Product Names Fixed : {fixed_names}")
+    issues.append(f"Duplicate Products Removed : {duplicate_products}")
+
+    products.to_csv(
+        CLEAN_DIR / "products.csv",
+        index=False
+    )
+
+    print("✔ Products Cleaned Successfully")
+
+    return products
 
 
 # -----------------------------
@@ -238,6 +236,43 @@ def validate_emails(customers):
     return customers, invalid_customers
 
 
+# -----------------------------
+# Check Referential Integrity
+# -----------------------------
+
+def check_referential_integrity(orders, products, order_items):
+
+    print("\n" + "=" * 60)
+    print("Checking Referential Integrity")
+    print("=" * 60)
+
+    valid_order_ids = set(orders["order_id"])
+
+    valid_product_ids = set(products["product_id"])
+
+    invalid_records = order_items[
+        (~order_items["order_id"].isin(valid_order_ids)) |
+        (~order_items["product_id"].isin(valid_product_ids))
+    ]
+
+    issues.append(
+        f"Invalid Referential Records : {len(invalid_records)}"
+    )
+
+    print(f"✔ Invalid Records Found : {len(invalid_records)}")
+
+    if len(invalid_records) > 0:
+
+        invalid_records.to_csv(
+            REPORT_DIR / "invalid_references.csv",
+            index=False
+        )
+
+        print("Invalid records saved.")
+
+    return order_items, invalid_records
+
+
 customers, products, orders, order_items = load_data()
 
 orders = clean_orders(orders)
@@ -246,9 +281,17 @@ products = clean_products(products)
 
 customers, invalid_customers = validate_emails(customers)
 
+order_items, invalid_records = check_referential_integrity(
+    orders,
+    products,
+    order_items
+)
 
 print("\nInvalid Customer IDs")
 
 for customer in invalid_customers:
-
     print(customer)
+
+print("\nInvalid Referential Records")
+
+print(len(invalid_records))
