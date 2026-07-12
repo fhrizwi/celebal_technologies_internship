@@ -69,6 +69,58 @@ def clean_products(products_df):
 
     return products_df
 
+
+# --------------------------------------------------
+# Validate Emails
+# --------------------------------------------------
+
+def validate_emails(customers_df):
+
+    print("\nValidating Emails...")
+
+    invalid_customers = []
+
+    for index, row in customers_df.iterrows():
+
+        email = str(row["email"]).strip()
+
+        valid = True
+
+        # Basic validation
+        if "@" not in email:
+            valid = False
+
+        elif email.count("@") != 1:
+            valid = False
+
+        else:
+
+            username, domain = email.split("@")
+
+            if username == "":
+                valid = False
+
+            elif "." not in domain:
+                valid = False
+
+        if not valid:
+
+            invalid_customers.append(row["customer_id"])
+
+    issues.append(
+        f"Invalid Emails Found : {len(invalid_customers)}"
+    )
+
+    print(f"Invalid Emails : {len(invalid_customers)}")
+    
+    
+    customers_df.to_csv(
+    CLEAN_DIR / "customers.csv",
+    index=False
+)
+
+    return invalid_customers
+
     # ----------------------------
     # Handle NULL customer_id
     # ----------------------------
@@ -135,3 +187,20 @@ orders = clean_orders(orders)
 
 products = clean_products(products)
 
+
+
+
+customers, products, orders, order_items = load_data()
+
+orders = clean_orders(orders)
+
+products = clean_products(products)
+
+invalid_emails = validate_emails(customers)
+
+
+
+
+print("\nInvalid Customer IDs")
+
+print(invalid_emails)
