@@ -121,6 +121,36 @@ def validate_emails(customers_df):
 
     return invalid_customers
 
+
+# --------------------------------------------------
+# Check Referential Integrity
+# --------------------------------------------------
+
+def check_referential_integrity(orders_df, order_items_df):
+
+    print("\nChecking Referential Integrity...")
+
+    valid_orders = set(orders_df["order_id"])
+
+    invalid_records = order_items_df[
+        ~order_items_df["order_id"].isin(valid_orders)
+    ]
+
+    issues.append(
+        f"Invalid Order References : {len(invalid_records)}"
+    )
+
+    print(f"Invalid Order References : {len(invalid_records)}")
+
+    if len(invalid_records) > 0:
+
+        invalid_records.to_csv(
+            CLEAN_DIR / "invalid_order_references.csv",
+            index=False
+        )
+
+    return invalid_records
+
     # ----------------------------
     # Handle NULL customer_id
     # ----------------------------
@@ -181,13 +211,31 @@ def validate_emails(customers_df):
     return orders_df
 
 
-customers, products, orders, order_items = load_data()
 
-orders = clean_orders(orders)
+# --------------------------------------------------
+# Save Issue Report
+# --------------------------------------------------
 
-products = clean_products(products)
+def save_issue_report():
 
+    report_path = CLEAN_DIR / "issues_report.txt"
 
+    with open(report_path, "w") as file:
+
+        file.write("=" * 40 + "\n")
+
+        file.write("DATA CLEANING REPORT\n")
+
+        file.write("=" * 40 + "\n\n")
+
+        for issue in issues:
+
+            file.write(issue + "\n")
+
+    print("\nissues_report.txt generated")
+    
+    
+    
 
 
 customers, products, orders, order_items = load_data()
@@ -204,3 +252,13 @@ invalid_emails = validate_emails(customers)
 print("\nInvalid Customer IDs")
 
 print(invalid_emails)
+
+
+
+invalid_orders = check_referential_integrity(
+    orders,
+    order_items
+)
+
+
+save_issue_report()
