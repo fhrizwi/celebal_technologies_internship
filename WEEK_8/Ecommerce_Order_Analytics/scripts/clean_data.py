@@ -48,6 +48,58 @@ def clean_orders(orders):
     print("\n" + "=" * 60)
     print("Cleaning Orders")
     print("=" * 60)
+    
+    
+# -----------------------------
+# Clean Products
+# -----------------------------
+
+def clean_products(products):
+
+    print("\n" + "=" * 60)
+    print("Cleaning Products")
+    print("=" * 60)
+
+    cleaned_names = []
+    fixed_names = 0
+
+    for name in products["product_name"]:
+
+        original = str(name)
+
+        # Remove extra spaces
+        cleaned = " ".join(original.split())
+
+        # Convert to Title Case
+        cleaned = cleaned.title()
+
+        if original != cleaned:
+            fixed_names += 1
+
+        cleaned_names.append(cleaned)
+
+    products["product_name"] = cleaned_names
+
+    # Remove duplicate products
+    before = len(products)
+
+    products = products.drop_duplicates()
+
+    after = len(products)
+
+    duplicate_products = before - after
+
+    issues.append(f"Product Names Fixed : {fixed_names}")
+    issues.append(f"Duplicate Products Removed : {duplicate_products}")
+
+    products.to_csv(
+        CLEAN_DIR / "products.csv",
+        index=False
+    )
+
+    print("✔ Products Cleaned Successfully")
+
+    return products
 
     # ---------------------------------
     # 1. Handle Missing Customer IDs
@@ -139,6 +191,10 @@ def clean_orders(orders):
 
     return orders
 
+
+
 customers, products, orders, order_items = load_data()
 
 orders = clean_orders(orders)
+
+products = clean_products(products)
